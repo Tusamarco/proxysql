@@ -154,6 +154,7 @@ enum session_status {
 	SETTING_TIME_ZONE,
 	SETTING_ISOLATION_LEVEL,
 	SETTING_TRANSACTION_READ,
+	SETTING_TX_ISOLATION,
 	SETTING_CHARACTER_SET_RESULTS,
 	SETTING_SESSION_TRACK_GTIDS,
 	SETTING_SQL_AUTO_IS_NULL,
@@ -624,6 +625,7 @@ __thread char *mysql_thread___default_sql_mode;
 __thread char *mysql_thread___default_time_zone;
 __thread char *mysql_thread___default_isolation_level;
 __thread char *mysql_thread___default_transaction_read;
+__thread char *mysql_thread___default_tx_isolation;
 __thread char *mysql_thread___default_character_set_results;
 __thread char *mysql_thread___default_session_track_gtids;
 __thread char *mysql_thread___default_sql_auto_is_null;
@@ -687,6 +689,7 @@ __thread bool mysql_thread___commands_stats;
 __thread bool mysql_thread___query_digests;
 __thread bool mysql_thread___query_digests_lowercase;
 __thread bool mysql_thread___query_digests_replace_null;
+__thread bool mysql_thread___query_digests_no_digits;
 __thread bool mysql_thread___query_digests_normalize_digest_text;
 __thread bool mysql_thread___query_digests_track_hostname;
 __thread int mysql_thread___query_digests_max_digest_length;
@@ -736,6 +739,7 @@ __thread int mysql_thread___monitor_replication_lag_interval;
 __thread int mysql_thread___monitor_replication_lag_timeout;
 __thread int mysql_thread___monitor_groupreplication_healthcheck_interval;
 __thread int mysql_thread___monitor_groupreplication_healthcheck_timeout;
+__thread int mysql_thread___monitor_groupreplication_healthcheck_max_timeout_count;
 __thread int mysql_thread___monitor_galera_healthcheck_interval;
 __thread int mysql_thread___monitor_galera_healthcheck_timeout;
 __thread int mysql_thread___monitor_galera_healthcheck_max_timeout_count;
@@ -770,6 +774,7 @@ extern __thread char *mysql_thread___default_sql_mode;
 extern __thread char *mysql_thread___default_time_zone;
 extern __thread char *mysql_thread___default_isolation_level;
 extern __thread char *mysql_thread___default_transaction_read;
+extern __thread char *mysql_thread___default_tx_isolation;
 extern __thread char *mysql_thread___default_character_set_results;
 extern __thread char *mysql_thread___default_session_track_gtids;
 extern __thread char *mysql_thread___default_sql_auto_is_null;
@@ -832,6 +837,7 @@ extern __thread bool mysql_thread___servers_stats;
 extern __thread bool mysql_thread___commands_stats;
 extern __thread bool mysql_thread___query_digests;
 extern __thread bool mysql_thread___query_digests_lowercase;
+extern __thread bool mysql_thread___query_digests_no_digits;
 extern __thread bool mysql_thread___query_digests_replace_null;
 extern __thread bool mysql_thread___query_digests_normalize_digest_text;
 extern __thread bool mysql_thread___query_digests_track_hostname;
@@ -882,6 +888,7 @@ extern __thread int mysql_thread___monitor_replication_lag_interval;
 extern __thread int mysql_thread___monitor_replication_lag_timeout;
 extern __thread int mysql_thread___monitor_groupreplication_healthcheck_interval;
 extern __thread int mysql_thread___monitor_groupreplication_healthcheck_timeout;
+extern __thread int mysql_thread___monitor_groupreplication_healthcheck_max_timeout_count;
 extern __thread int mysql_thread___monitor_galera_healthcheck_interval;
 extern __thread int mysql_thread___monitor_galera_healthcheck_timeout;
 extern __thread int mysql_thread___monitor_galera_healthcheck_max_timeout_count;

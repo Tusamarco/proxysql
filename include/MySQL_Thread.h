@@ -21,6 +21,7 @@
 #define MYSQL_DEFAULT_TIME_ZONE	"SYSTEM"
 #define MYSQL_DEFAULT_ISOLATION_LEVEL	"READ COMMITTED"
 #define MYSQL_DEFAULT_TRANSACTION_READ	"WRITE"
+#define MYSQL_DEFAULT_TX_ISOLATION	"READ-COMMITTED"
 #define MYSQL_DEFAULT_CHARACTER_SET_RESULTS	"NULL"
 #define MYSQL_DEFAULT_SESSION_TRACK_GTIDS	"OFF"
 #define MYSQL_DEFAULT_SQL_AUTO_IS_NULL	"OFF"
@@ -366,6 +367,7 @@ class MySQL_Threads_Handler
 		int monitor_replication_lag_timeout;
 		int monitor_groupreplication_healthcheck_interval;
 		int monitor_groupreplication_healthcheck_timeout;
+		int monitor_groupreplication_healthcheck_max_timeout_count;
 		int monitor_galera_healthcheck_interval;
 		int monitor_galera_healthcheck_timeout;
 		int monitor_galera_healthcheck_max_timeout_count;
@@ -407,6 +409,7 @@ class MySQL_Threads_Handler
 		bool query_digests;
 		bool query_digests_lowercase;
 		bool query_digests_replace_null;
+		bool query_digests_no_digits;
 		bool query_digests_normalize_digest_text;
 		bool query_digests_track_hostname;
 		bool default_reconnect;
@@ -455,6 +458,7 @@ class MySQL_Threads_Handler
 		char *default_time_zone;
 		char *default_isolation_level;
 		char *default_transaction_read;
+		char *default_tx_isolation;
 		char *default_character_set_results;
 		char *default_session_track_gtids;
 		char *default_sql_auto_is_null;

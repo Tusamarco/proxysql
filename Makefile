@@ -48,6 +48,9 @@ testaurora: build_deps_debug build_lib_testaurora build_src_testaurora
 .PHONY: testgalera
 testgalera: build_deps_debug build_lib_testgalera build_src_testgalera
 
+.PHONY: testgrouprep
+testgrouprep: build_deps_debug build_lib_testgrouprep build_src_testgrouprep
+
 .PHONY: testall
 testall: build_deps_debug build_lib_testall build_src_testall
 
@@ -94,13 +97,21 @@ build_src_testgalera: build_deps build_lib_testgalera
 build_lib_testgalera: build_deps_debug
 	cd lib && OPTZ="${O0} -ggdb -DDEBUG -DTEST_GALERA" CC=${CC} CXX=${CXX} ${MAKE}
 
+.PHONY: build_src_testgrouprep
+build_src_testgrouprep: build_deps build_lib_testgrouprep
+	cd src && OPTZ="${O0} -ggdb -DDEBUG -DTEST_GROUPREP" CC=${CC} CXX=${CXX} ${MAKE}
+
+.PHONY: build_lib_testgrouprep
+build_lib_testgrouprep: build_deps_debug
+	cd lib && OPTZ="${O0} -ggdb -DDEBUG -DTEST_GROUPREP" CC=${CC} CXX=${CXX} ${MAKE}
+
 .PHONY: build_src_testall
 build_src_testall: build_deps build_lib_testall
-	cd src && OPTZ="${O0} -ggdb -DDEBUG -DTEST_AURORA -DTEST_GALERA" CC=${CC} CXX=${CXX} ${MAKE}
+	cd src && OPTZ="${O0} -ggdb -DDEBUG -DTEST_AURORA -DTEST_GALERA -DTEST_GROUPREP" CC=${CC} CXX=${CXX} ${MAKE}
 
 .PHONY: build_lib_testall
 build_lib_testall: build_deps_debug
-	cd lib && OPTZ="${O0} -ggdb -DDEBUG -DTEST_AURORA -DTEST_GALERA" CC=${CC} CXX=${CXX} ${MAKE}
+	cd lib && OPTZ="${O0} -ggdb -DDEBUG -DTEST_AURORA -DTEST_GALERA -DTEST_GROUPREP" CC=${CC} CXX=${CXX} ${MAKE}
 
 .PHONY: build_src_debug
 build_src_debug: build_deps build_lib_debug
@@ -136,7 +147,7 @@ clean:
 	cd lib && ${MAKE} clean
 	cd src && ${MAKE} clean
 
-packages: centos6.7 centos7 centos6.7-dbg centos7-dbg ubuntu14 debian7 debian8 ubuntu14-dbg debian7-dbg debian8-dbg ubuntu16 ubuntu16-dbg fedora24 fedora24-dbg debian9 debian9-dbg ubuntu16-clickhouse debian9-clickhouse centos7-clickhouse fedora24-clickhouse fedora27 fedora27-dbg fedora27-clickhouse ubuntu18 ubuntu18-dbg ubuntu18-clickhouse fedora28 fedora28-dbg fedora28-clickhouse
+packages: centos6.7 centos6.7-dbg centos7 centos7-dbg centos7-clickhouse ubuntu14 ubuntu14-dbg ubuntu16 ubuntu16-dbg ubuntu16-clickhouse ubuntu18 ubuntu18-dbg ubuntu18-clickhouse debian7 debian7-dbg debian8 debian8-dbg debian9 debian9-dbg debian9-clickhouse debian10 debian10-dbg debian10-clickhouse fedora24 fedora24-dbg  fedora24-clickhouse fedora27 fedora27-dbg fedora27-clickhouse fedora28 fedora28-dbg fedora28-clickhouse
 .PHONY: packages
 
 centos5: binaries/proxysql-${CURVER}-1-centos5.x86_64.rpm
@@ -193,6 +204,9 @@ debian8: binaries/proxysql_${CURVER}-debian8_amd64.deb
 debian9: binaries/proxysql_${CURVER}-debian9_amd64.deb
 .PHONY: debian9
 
+debian10: binaries/proxysql_${CURVER}-debian10_amd64.deb
+.PHONY: debian10
+
 ubuntu14-dbg: binaries/proxysql_${CURVER}-dbg-ubuntu14_amd64.deb
 .PHONY: ubuntu14-dbg
 
@@ -228,6 +242,12 @@ debian9.4-dbg: binaries/proxysql_${CURVER}-dbg-debian9.4_amd64.deb
 
 debian9.4-clickhouse: binaries/proxysql_${CURVER}-clickhouse-debian9.4_amd64.deb
 .PHONY: debian9.4-clickhouse
+
+debian10-dbg: binaries/proxysql_${CURVER}-dbg-debian10_amd64.deb
+.PHONY: debian10-dbg
+
+debian10-clickhouse: binaries/proxysql_${CURVER}-clickhouse-debian10_amd64.deb
+.PHONY: debian10-clickhouse
 
 centos7-clickhouse: binaries/proxysql-${CURVER}-clickhouse-1-centos7.x86_64.rpm
 .PHONY: centos7-clickhouse
@@ -337,12 +357,20 @@ binaries/proxysql_${CURVER}-debian9.4_amd64.deb:
 	docker-compose up debian9_build
 	docker-compose rm -f
 
+binaries/proxysql_${CURVER}-debian10_amd64.deb:
+	docker-compose up debian10_build
+	docker-compose rm -f
+
 binaries/proxysql_${CURVER}-clickhouse-debian9_amd64.deb:
 	docker-compose up debian9_ch_build
 	docker-compose rm -f
 
 binaries/proxysql_${CURVER}-clickhouse-debian9.4_amd64.deb:
 	docker-compose up debian9.4_ch_build
+	docker-compose rm -f
+
+binaries/proxysql_${CURVER}-clickhouse-debian10_amd64.deb:
+	docker-compose up debian10_ch_build
 	docker-compose rm -f
 
 binaries/proxysql_${CURVER}-dbg-ubuntu14_amd64.deb:
@@ -379,6 +407,10 @@ binaries/proxysql_${CURVER}-dbg-debian9_amd64.deb:
 
 binaries/proxysql_${CURVER}-dbg-debian9.4_amd64.deb:
 	docker-compose up debian9_dbg_build
+	docker-compose rm -f
+
+binaries/proxysql_${CURVER}-dbg-debian10_amd64.deb:
+	docker-compose up debian10_dbg_build
 	docker-compose rm -f
 
 .PHONY: cleanall
